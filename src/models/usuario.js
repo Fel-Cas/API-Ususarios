@@ -22,7 +22,16 @@ const usuarioShema=mongoose.Schema({
     contrasena:{
         type: String,
         required: true
+    },
+    celular:{
+        type:String,
+        require:true
+    },
+    cuenta:{
+        type:String,
+        require:true
     }
+
     
 });
 

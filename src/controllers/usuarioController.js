@@ -34,7 +34,7 @@ exports.eliminarUsuario=async(req,res)=>{
     res.send({message:'Usuario eliminado'});
 }
 exports.actualizarUsuario=async(req,res)=>{
-    let nombres=req.body.nombres,apellidos=req.body.apellidos,contrasena=req.body.contrasena;
+    let nombres=req.body.nombres,apellidos=req.body.apellidos,contrasena=req.body.contrasena,celular=req.body.celular,cuenta=req.body.cuenta;
     let user=await User.findOne({usuario:req.params.username});
     if(!user){
         return  res.status(404).send({message:'Usuario no encontrado'});
@@ -48,12 +48,21 @@ exports.actualizarUsuario=async(req,res)=>{
     if (contrasena != undefined || contrasena!= "" || contrasena != null) {
         user.contrasena=await User.encriptarContrasena(contrasena);
     }
+    if (celular != undefined || celular!= "" || celular != null) {
+        user.celular=celular;
+    }
+    if (cuenta != undefined || cuenta!= "" || cuenta != null) {
+        user.cuenta=cuenta;
+    }
      let update={
         usuario:user.usuario,
         nombres:user.nombres,
         apellidos:user.apellidos,
         correo:user.correo,
-        contrasena:user.contrasena
+        contrasena:user.contrasena,
+        celular:user.celular,
+        cuenta:user.cuenta
+
      }
     User.updateOne({usuario:req.params.username}, update, (err, user) => {
         if (err) res.status(500).send({ message: `Error ${err}` })
